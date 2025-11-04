@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technical Report: Network Infrastructure Upgrade</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', 'Noto Sans', -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+            line-height: 1.8;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+        }
+        
+        .page {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 60px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .page::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        header {
+            border-bottom: 3px solid #e0e0e0;
+            padding-bottom: 20px;
+            margin-bottom: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: #7f8c8d;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+        
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .header-left::before {
+            content: '📡';
+            font-size: 18px;
+        }
+        
+        .header-right {
+            text-align: right;
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 36px;
+            font-weight: 700;
+            margin: 30px 0 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.5px;
+        }
+        
+        .author {
+            text-align: center;
+            font-size: 16px;
+            margin-bottom: 8px;
+            color: #34495e;
+            font-weight: 600;
+        }
+        
+        .author-title {
+            font-style: italic;
+            color: #7f8c8d;
+            font-weight: 400;
+            font-size: 14px;
+            display: block;
+            margin-top: 5px;
+        }
+        
+        .date {
+            text-align: center;
+            font-size: 14px;
+            margin-bottom: 40px;
+            color: #95a5a6;
+            font-weight: 500;
+        }
+        
+        .abstract {
+            margin: 40px 0;
+            padding: 30px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8eef5 100%);
+            border-left: 5px solid #667eea;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        
+        .abstract h2 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            color: #667eea;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .abstract p {
+            text-align: justify;
+            color: #34495e;
+            line-height: 1.9;
+        }
+        
+        h2 {
+            font-size: 26px;
+            font-weight: 700;
+            margin-top: 50px;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+            position: relative;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: #764ba2;
+        }
+        
+        h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            color: #34495e;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        h3::before {
+            content: '▸';
+            color: #667eea;
+            font-size: 24px;
+        }
+        
+        p {
+            margin-bottom: 18px;
+            text-align: justify;
+            color: #34495e;
+            font-size: 15px;
+        }
+        
+        ul {
+            margin-left: 0;
+            margin-bottom: 25px;
+            list-style: none;
+        }
+        
+        li {
+            margin-bottom: 15px;
+            padding-left: 35px;
+            position: relative;
+            line-height: 1.8;
+        }
+        
+        li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        strong {
+            font-weight: 700;
+            color: #2c3e50;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 30px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        caption {
+            caption-side: top;
+            text-align: left;
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: #7f8c8d;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        th, td {
+            padding: 18px;
+            text-align: left;
+        }
+        
+        thead tr {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        th {
+            font-weight: 600;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        tbody tr {
+            background: white;
+            transition: all 0.3s ease;
+        }
+        
+        tbody tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        tbody tr:hover {
+            background: #e8eef5;
+            transform: scale(1.01);
+        }
+        
+        td {
+            color: #34495e;
+            font-size: 14px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .counter {
+            counter-reset: section;
+        }
+        
+        h2::before {
+            counter-increment: section;
+            content: counter(section) " ";
+            color: #764ba2;
+            font-weight: 700;
+            margin-right: 10px;
+        }
+        
+        footer {
+            border-top: 3px solid #e0e0e0;
+            padding-top: 20px;
+            margin-top: 60px;
+            text-align: center;
+            font-size: 12px;
+            color: #95a5a6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        footer::before {
+            content: '📄';
+            font-size: 16px;
+        }
+        
+        footer::after {
+            content: '✓ Complete';
+            padding: 5px 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        
+        .highlight-stat {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 14px;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .page {
+                box-shadow: none;
+                border-radius: 0;
+                padding: 40px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .page {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 28px;
+            }
+            
+            h2 {
+                font-size: 22px;
+            }
+            
+            header {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+            
+            .header-right {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <header>
+            <div class="header-left">ICCD Network Infrastructure Upgrade</div>
+            <div class="header-right">Arfan, A. | September 2025</div>
+        </header>
+        
+        <h1>Technical Report: Network Infrastructure Upgrade</h1>
+        
+        <div class="author">
+            Abdulmoiz Arfan
+            <span class="author-title">Network Intern, Islamic Community Center of Des Plaines (ICCD)</span>
+        </div>
+        
+        <div class="date">September 2025 – Present</div>
+        
+        <div class="abstract">
+            <h2>Abstract</h2>
+            <p>
+                This report documents the planning, engineering, and configuration efforts for the network infrastructure expansion at the ICCD's new school property. The primary objective was to deploy a robust, high-speed, and secure wireless network. Through strategic implementation of enterprise-grade hardware and software configurations, the project successfully increased network bandwidth by <span class="highlight-stat">50%</span> and coverage by <span class="highlight-stat">25%</span>, significantly exceeding initial performance goals.
+            </p>
+        </div>
+        
+        <div class="counter">
+            <h2>Introduction</h2>
+            <p>
+                The ICCD's property expansion necessitated a corresponding overhaul and upgrade of the existing network to support increased density of users (students and staff) and data-intensive applications. This project focused on building a reliable, scalable, and secure network foundation to eliminate connectivity dead zones and meet high-demand digital learning requirements.
+            </p>
+            
+            <h2>Project Goals and Quantified Outcomes</h2>
+            <p>
+                The project was defined by two primary performance metrics. The outcomes were measured against pre-deployment network baselines.
+            </p>
+            
+            <table>
+                <caption>Table 1: Performance Metrics and Achieved Results</caption>
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Target Goal</th>
+                        <th>Achieved Result</th>
+                        <th>Impact Summary</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Bandwidth Increase</strong></td>
+                        <td>30%</td>
+                        <td>50%</td>
+                        <td>Enhanced performance for large file transfers and real-time streaming.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Wireless Coverage Area</strong></td>
+                        <td>20%</td>
+                        <td>25%</td>
+                        <td>Eliminated critical dead zones across all new construction and classrooms.</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h2>Implementation and Configuration Details</h2>
+            <p>
+                The deployment followed a methodical process focused on physical layer reliability and logical network segmentation.
+            </p>
+            
+            <h3>Phase 1: Physical Deployment</h3>
+            <ul>
+                <li><strong>Cabling Infrastructure:</strong> Oversaw the installation and termination of new <strong>Cat 6 Ethernet cabling</strong> throughout the property to guarantee sufficient physical layer support for current and future Gigabit speeds.</li>
+                <li><strong>Hardware Deployment:</strong> Deployed and physically mounted <strong>enterprise-grade wireless access points (APs)</strong>, optimized for high-density environments, to support advanced standards like 802.11ax.</li>
+            </ul>
+            
+            <h3>Phase 2: Logical Configuration</h3>
+            <ul>
+                <li><strong>Network Segmentation (VLANs):</strong> Configured <strong>managed Layer 2 switches</strong> to utilize Virtual Local Area Networks (VLANs). This process successfully segregated traffic into dedicated networks (e.g., Staff, Student, Guest), significantly improving security and minimizing broadcast domain size.</li>
+                <li><strong>Quality of Service (QoS):</strong> Implemented QoS policies to prioritize instructional and administrative network traffic (e.g., VoIP, video conferencing) over general user traffic, ensuring critical operations remain highly responsive.</li>
+                <li><strong>Centralized Management:</strong> Implemented a <strong>centralized network controller system</strong> to streamline the monitoring, maintenance, and policy deployment across all deployed access points.</li>
+            </ul>
+            
+            <h2>Conclusion and Future Scope</h2>
+            <p>
+                The Network Infrastructure Upgrade project successfully established a highly scalable, secure, and fast network environment, meeting the technological demands of the ICCD's expansion. The project's foundational design ensures ease of future maintenance and scalability.
+            </p>
+        </div>
+        
+        <footer>
+            <span>Page 1 of 1</span>
+            <span></span>
+        </footer>
+    </div>
+</body>
+</html>
