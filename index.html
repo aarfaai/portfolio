@@ -244,7 +244,34 @@
     <footer class="bg-gray-800 text-white p-4 text-center text-sm">
         <p>&copy; 2025 Abdulmoiz Arfan | Built with Tailwind CSS</p>
     </footer>
+  <!-- CHATBOT: Floating button + modal -->
+  <div id="chat-root">
+    <!-- Floating Button -->
+    <button id="chat-open-btn" class="fixed right-6 bottom-6 z-50 bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-lg flex items-center justify-center">
+      <i class="fas fa-robot"></i>
+    </button>
 
+    <!-- Modal / Chat Window (hidden by default) -->
+    <div id="chat-modal" class="fixed right-6 bottom-20 z-50 hidden w-96 md:w-[420px] bg-white rounded-xl shadow-2xl overflow-hidden">
+      <div class="px-4 py-3 bg-gradient-to-r from-blue-600 to-blue-500 text-white flex justify-between items-center">
+        <div class="font-semibold">AI Assistant</div>
+        <button id="chat-close-btn" class="text-white text-lg"><i class="fas fa-times"></i></button>
+      </div>
+
+      <div id="chat-body" class="p-4 h-72 overflow-y-auto bg-gray-50">
+        <!-- messages go here -->
+      </div>
+
+      <div class="p-3 border-t bg-white flex items-center gap-2">
+        <input id="chat-input" class="flex-1 px-3 py-2 rounded-md border text-sm" placeholder="Ask about my projects, skills, or say 'resume'">
+        <button id="chat-send" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- WebLLM CDN and chatbot script -->
+  <script src="https://cdn.jsdelivr.net/npm/@mlc-ai/web-llm@latest/dist/web-llm.min.js"></script>
+  <script src="chatbot.js"></script>
 </body>
 </html>
 
